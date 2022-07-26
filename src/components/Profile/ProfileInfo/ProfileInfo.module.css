@@ -1,0 +1,9 @@
+.backgroundImage {
+    max-height: 540px;
+    width: 100%;
+}
+
+.descriptionBlock {
+    color: white;
+    padding: 10px;
+}

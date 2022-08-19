@@ -83,19 +83,16 @@ export const store: StoreType = {
     _callSubscriber() {
         console.log('state changed')
     },
-
     subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
     getState() {
         return this._state
     },
-
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
         this._state.sideBarPage = sidebarReducer(this._state.sideBarPage, action)
-
         this._callSubscriber(this._state)
     },
 }

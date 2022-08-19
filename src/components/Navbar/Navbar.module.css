@@ -18,3 +18,24 @@
 
 
 }
+
+.friends {
+ display: flex;
+    margin-top: 10px ;
+}
+.friend {
+    font-size: 15px;
+
+
+}
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.sidebar {
+    color: #ececec;
+    margin-top: 20px;
+    font-size: 30px;
+}

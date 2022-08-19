@@ -2,6 +2,8 @@
     display: grid;
     grid-template-columns: 2fr 10fr;
     color: #ececec;
+    gap: 10px;
+    padding: 0 10px 7px 10px;
 }
 
 .dialogsItems{
@@ -15,8 +17,18 @@
 
 .messages {
     padding: 10px;
+
 }
 .messages .message {
     color:#ececec;
 
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.name {
+    color: #ececec;
 }

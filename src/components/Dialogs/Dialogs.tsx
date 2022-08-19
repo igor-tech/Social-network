@@ -1,37 +1,36 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
-import {NavLink} from 'react-router-dom';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
+import {DialogPropsType, MessagePropsType} from '../../App';
+import {ActionsTypes} from '../../redux/store';
+import {sendMessageActionCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reducer';
 
 
+type DialogsStateType = {
+    dialogs: Array<DialogPropsType>
+    messages: Array<MessagePropsType>
+    newMessageBody: string
+}
+type DialogsType = {
+    state: DialogsStateType
+    dispatch: (action: ActionsTypes) => void
+}
+
+function Dialogs(props: DialogsType) {
+
+    let dialogsElements = props.state.dialogs.map(n => <DialogItem key={n.id} name={n.name} id={n.id} link={n.link}/>)
+    let messagesElements = props.state.messages.map(m => <Message key={m.id} message={m.message}/>)
+    let newMessageBody = props.state.newMessageBody;
 
 
-
-function Dialogs() {
-
-    let dialogs = [
-        {id: 1, name: 'Igor'},
-        {id: 2, name: 'Arsen'},
-        {id: 3, name: 'Elsey'},
-        {id: 4, name: 'Roma'},
-        {id: 5, name: 'Ivan'},
-        {id: 6, name: 'David'},
-        {id: 7, name: 'Alex'},
-    ]
-
-    let messages = [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'How are you?'},
-        {id: 3, message: 'Yoo!'},
-        {id: 4, message: 'Yoo!'},
-        {id: 5, message: 'Yoo!'},
-        {id: 6, message: 'Yoo!'},
-        {id: 7, message: 'Yoo!'},
-    ]
-
-    let dialogsElements = dialogs.map( dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
-    let messagesElements = messages.map( m => <Message message={m.message} />);
+    const onSendMessageClick = () => {
+        props.dispatch(sendMessageActionCreator())
+    }
+    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let body = e.target.value
+        props.dispatch(updateNewMessageBodyCreator(body))
+    }
 
     return (
         <div className={s.dialogs}>
@@ -39,8 +38,18 @@ function Dialogs() {
                 {dialogsElements}
             </div>
             <div className={s.messages}>
-                {messagesElements}
+                <div>{messagesElements}</div>
+                <div>
+                    <div><textarea value={newMessageBody}
+                                   placeholder={'enter your message'}
+                                   onChange={onNewMessageChange}
+                    ></textarea></div>
+                    <div>
+                        <button onClick={onSendMessageClick}>Send</button>
+                    </div>
+                </div>
             </div>
+
         </div>
     )
 }

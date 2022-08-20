@@ -4,7 +4,8 @@ import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import {PostPropsType} from '../../App';
 import profileInfo from './ProfileInfo/ProfileInfo';
-import {ActionsTypes} from '../../redux/store';
+import {ActionsTypes, StoreType} from '../../redux/store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 
 type ProfileStateType = {
@@ -12,8 +13,7 @@ type ProfileStateType = {
     newPostText: any
 }
 type ProfileType = {
-    profilePage: ProfileStateType
-    dispatch: (action: ActionsTypes) => void
+    store: any
 }
 
 
@@ -22,10 +22,8 @@ function Profile(props: ProfileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.profilePage.posts}
-                     newPostText={props.profilePage.newPostText}
-                     dispatch={props.dispatch}
-
+            <MyPostsContainer
+                store={props.store}
             />
         </div>
     )

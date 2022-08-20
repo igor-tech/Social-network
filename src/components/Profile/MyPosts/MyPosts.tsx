@@ -11,32 +11,31 @@ type PostType = {
 }
 type MyPostsType = {
     posts: Array<PostType>
+    updateNewPost: (text: string) => void
+    addPost: () => void
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
 }
 
 function MyPosts(props: MyPostsType) {
     let postsElement = props.posts.map(p => <Post key={p.id} description={p.description} likesCount={p.likesCount}/>)
-    let newPostElement = props.newPostText
 
-    const addPost = () => {
-        props.dispatch(addPostActionCreator())
+    const onAddPost = () => {
+        props.addPost();
     }
 
-
     let onPostChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let post = e.target.value
-        props.dispatch(updateNewPostTextActionCreator(post))
+        let text = e.currentTarget.value
+        props.updateNewPost(text)
     }
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <input value={newPostElement} onChange={onPostChange} placeholder={'write your post'}/>
+                    <input onChange={onPostChange} value={props.newPostText} placeholder={'write your post'}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

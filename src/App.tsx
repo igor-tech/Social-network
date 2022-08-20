@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {ActionsTypes, StoreType} from './redux/store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 export type PostPropsType = {
     id: number
@@ -49,6 +50,7 @@ export type StatePropsType = {
 type AppPropsType = {
     state: StatePropsType
     dispatch: (action: ActionsTypes) => void
+    store: any
 }
 
 function App(props: AppPropsType) {
@@ -61,13 +63,8 @@ function App(props: AppPropsType) {
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
-                    <Route path="/dialogs" render={() => <Dialogs state={props.state.messagesPage}
-                                                                  dispatch={props.dispatch}
-                    />}/>
-                    <Route path="/profile" render={() => <Profile
-                        profilePage={props.state.profilePage}
-                        dispatch={props.dispatch}
-                    />}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer store={props.store}/>}/>
+                    <Route path="/profile" render={() => <Profile store={props.store}/>}/>
                 </div>
             </div>
         </BrowserRouter>

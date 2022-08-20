@@ -5,7 +5,7 @@ import {SideBarType} from '../../App';
 import SideBar from './sideBar/SideBar';
 
 type NavbarType = {
-    state: SideBarType
+    state?: SideBarType
 }
 
 function Navbar(props: NavbarType) {
@@ -27,7 +27,7 @@ function Navbar(props: NavbarType) {
                 <NavLink to="/settings" activeClassName={s.activeLink}>Settings</NavLink>
             </div>
             <div className={s.sidebar}>Friends
-                <SideBar state={props.state}/>
+                {/*<SideBar state={props.state}/>*/}
             </div>
         </nav>
     )

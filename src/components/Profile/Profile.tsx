@@ -12,18 +12,14 @@ type ProfileStateType = {
     posts: Array<PostPropsType>
     newPostText: any
 }
-type ProfileType = {
-    store: any
-}
 
 
-function Profile(props: ProfileType) {
+function Profile() {
 
     return (
         <div>
             <ProfileInfo/>
             <MyPostsContainer
-                store={props.store}
             />
         </div>
     )

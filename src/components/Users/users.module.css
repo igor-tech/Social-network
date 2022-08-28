@@ -1,0 +1,43 @@
+.background {
+    background-color: #ececec;
+    height: 100%;
+    padding: 10px 20px 0 10px;
+
+}
+
+.photo {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+
+.users {
+    display: flex;
+    padding-bottom: 10px;
+
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: solid #152238 3px;
+    border-radius: 70px;
+    padding: 12px;
+    font-size: 20px;
+}
+
+.btn {
+    display: block;
+    margin: auto;
+    align-items: center;
+
+
+}

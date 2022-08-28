@@ -6,7 +6,7 @@ import {MessagesPagetType} from '../../App';
 
 type DialogsType = {
     messagesPage: MessagesPagetType
-    updateNewMassageBody: (body: string) => void
+    updateNewMassageBody: (body: any) => void
     sendMessageBody: () => void
 }
 

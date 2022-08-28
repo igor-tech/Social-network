@@ -1,19 +1,15 @@
 import React from 'react';
 import s from '../Navbar.module.css';
-import {SideBarPropsType} from '../../../App';
+import {SideBarPropsType, SideBarType} from '../../../App';
 
-type SideBarType = {
-    state: FriendType
-}
-
-type FriendType = {
+type SideBarTypeProps = {
     friends: Array<SideBarPropsType>
 }
 
-const SideBar = (props: SideBarType) => {
+const SideBar = (props: SideBarTypeProps) => {
     return (
         <div className={s.friends}>
-            {props.state.friends.map(a => {
+            {props.friends.map(a => {
                 return (
                     <div key={a.id} className={s.friend}>
                         <img className={s.avatar} src={a.link} alt=""/>

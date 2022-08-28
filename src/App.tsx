@@ -8,6 +8,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 export type PostPropsType = {
     id: number
@@ -45,16 +46,12 @@ export type StatePropsType = {
     messagesPage: MessagesPagetType
     sideBarPage: SideBarType
 }
-type AppPropsType = {
 
-}
-
-function App(props: AppPropsType) {
+function App() {
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
                 <Header/>
-                {/*<Navbar state={props.state.sideBarPage}/>*/}
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
                     <Route path="/news" component={News}/>
@@ -62,6 +59,7 @@ function App(props: AppPropsType) {
                     <Route path="/settings" component={Settings}/>
                     <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/profile" render={() => <Profile/>}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
                 </div>
             </div>
         </BrowserRouter>

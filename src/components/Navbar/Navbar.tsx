@@ -1,14 +1,10 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
-import {SideBarType} from '../../App';
-import SideBar from './sideBar/SideBar';
+import SideBarContainer from './sideBar/SideBarContainer';
 
-type NavbarType = {
-    state?: SideBarType
-}
 
-function Navbar(props: NavbarType) {
+function Navbar() {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -26,11 +22,16 @@ function Navbar(props: NavbarType) {
             <div className={s.item}>
                 <NavLink to="/settings" activeClassName={s.activeLink}>Settings</NavLink>
             </div>
+            <div className={s.item}>
+                <NavLink to="/users" activeClassName={s.activeLink}>Users</NavLink>
+            </div>
             <div className={s.sidebar}>Friends
-                {/*<SideBar state={props.state}/>*/}
+                <SideBarContainer/>
             </div>
         </nav>
     )
 }
+
+
 
 export default Navbar;

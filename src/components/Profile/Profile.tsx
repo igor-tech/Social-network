@@ -8,10 +8,6 @@ import {ActionsTypes, StoreType} from '../../redux/store';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 
-type ProfileStateType = {
-    posts: Array<PostPropsType>
-    newPostText: any
-}
 
 
 function Profile() {

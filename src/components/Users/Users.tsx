@@ -1,6 +1,8 @@
 import React from 'react';
 import {UserType} from '../../redux/users-reducer';
 import styles from './users.module.css';
+import axios from 'axios';
+import avatarPhoto from '../../assets/images/avatar.png';
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -11,63 +13,27 @@ type UsersPropsType = {
 
 
 const Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: 'https://img01.rl0.ru/afisha/e904x508p0x32f5760x3291q85i/s3.afisha.ru/mediastorage/87/27/5fd2432fb42640fd99f0e9fb2787.jpg',
-                followed: false,
-                fullName: 'Igor',
-                status: 'i am boss',
-                location: {
-                    city: 'Minsk',
-                    country: 'belarus'
-                }
-            },
-            {
-                id: 2,
-                photoUrl: 'https://s2.stc.all.kpcdn.net/putevoditel/serialy/wp-content/uploads/2022/03/MyCollages-kopiya-4-1024x576.jpg',
-                followed: false,
-                fullName: 'Dimych',
-                status: 'i am Dimych',
-                location: {
-                    city: 'Moscow',
-                    country: 'Russia'
-                }
-            },
-            {
-                id: 3,
-                photoUrl: 'https://www.thevoicemag.ru/upload/img_cache/6bc/6bcd9545fab661fdb62f2c45a52d7807_ce_2000x1331x0x0_cropped_666x444.jpg',
-                followed: true,
-                fullName: 'Artem',
-                status: 'hi i am artem',
-                location: {
-                    city: 'Minsk',
-                    country: 'belarus'
-                }
-            },
-            {
-                id: 4,
-                photoUrl: 'https://www.vokrug.tv/pic/person/e/b/f/1/ebf14965f14a2a2bf01dbc0e34d5f3b6.jpg',
-                followed: true,
-                fullName: 'Viktor',
-                status: 'how are you',
-                location: {
-                    city: 'Moscow',
-                    country: 'Russia'
-                }
-            }
-        ])
+    let getUsers = () => {
+        if (props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(response => {
+                    props.setUsers(response.data.items)
+                });
+        }
+
     }
 
     return (
+
         <div className={styles.background}>
+            <button onClick={getUsers}>Get Users</button>
             {
                 props.users.map(u => <div key={u.id}>
                     <div className={styles.users}>
                         <div className={styles.avatar}>
                             <div>
-                                <img className={styles.photo} src={u.photoUrl} alt="photoURL"/>
+                                <img className={styles.photo} src={u.photos.small ? u.photos.small : avatarPhoto}
+                                     alt="photoURL"/>
                             </div>
                             <div>
                                 {u.followed
@@ -78,12 +44,12 @@ const Users = (props: UsersPropsType) => {
                         </div>
                         <div className={styles.info}>
                             <div>
-                                <div>{u.fullName}</div>
+                                <div>{u.name}</div>
                                 <div>{u.status}</div>
                             </div>
                             <div>
-                                <div>{u.location.country}</div>
-                                <div>{u.location.city}</div>
+                                <div>{'u.location.country'}</div>
+                                <div>{'u.location.city'}</div>
                             </div>
                         </div>
                     </div>

@@ -28,6 +28,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    max-width: 800px;
     border: solid #152238 3px;
     border-radius: 70px;
     padding: 12px;
@@ -43,4 +44,11 @@
 }
 .selectedPage {
    font-weight: bold;
+}
+.preloader {
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    top: 30%;
+    transition: 2s all;
 }

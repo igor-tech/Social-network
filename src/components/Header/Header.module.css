@@ -9,3 +9,21 @@
     padding: 15px;
     width: 30px;
 }
+.loginBlock{
+    float: right;
+    margin: 15px;
+}
+.navlink{
+
+    color: #ececec;
+}
+.avatar {
+    height: 30px;
+    border-radius: 50%;
+}
+.login{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #ececec;
+}

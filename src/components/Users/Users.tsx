@@ -2,6 +2,7 @@ import React from 'react';
 import {UserType} from '../../redux/users-reducer';
 import styles from './users.module.css';
 import avatarPhoto from '../../assets/images/avatar.png';
+import {NavLink} from 'react-router-dom';
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -13,7 +14,7 @@ type UsersPropsType = {
     onPageChanged: (pageNumber: number) => void
 }
 
-const Users = (props:UsersPropsType ) => {
+const Users = (props: UsersPropsType) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = [];
@@ -21,9 +22,9 @@ const Users = (props:UsersPropsType ) => {
         pages.push(i)
     }
     let curP = props.currentPage;
-    let curPF = ((curP - 5) < 0) ?  0  : curP - 5 ;
+    let curPF = ((curP - 5) < 0) ? 0 : curP - 5;
     let curPL = curP + 5;
-    let slicedPages = pages.slice( curPF, curPL);
+    let slicedPages = pages.slice(curPF, curPL);
 
     return (
         <div className={styles.background}>
@@ -40,8 +41,10 @@ const Users = (props:UsersPropsType ) => {
                     <div className={styles.users}>
                         <div className={styles.avatar}>
                             <div>
-                                <img className={styles.photo} src={u.photos.small ? u.photos.small : avatarPhoto}
-                                     alt="photoURL"/>
+                                <NavLink to={'/profile/' + u.id}>
+                                    <img className={styles.photo} src={u.photos.small ? u.photos.small : avatarPhoto}
+                                         alt="photoURL"/>
+                                </NavLink>
                             </div>
                             <div>
                                 {u.followed

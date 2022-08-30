@@ -19,7 +19,8 @@ type MapDispatchPropsType = {
 const mapStateToProps = (state: AppStateType): ProfileReducerInitialStateType => {
     return {
         newPostText: state.profilePage.newPostText,
-        posts: state.profilePage.posts
+        posts: state.profilePage.posts,
+        profile: state.profilePage.profile,
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

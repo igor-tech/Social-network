@@ -5,15 +5,14 @@ import {
     followfAC,
     setCurrentPageAC,
     setUsersAC,
-    setUsersTotalCountAC, toggleIsFetchingAC,
+    setUsersTotalCountAC,
+    toggleIsFetchingAC,
     unfollowfAC,
     UserType
 } from '../../redux/users-reducer';
 import {Dispatch} from 'redux';
 import axios from 'axios';
 import Users from './Users';
-import preloaderSVG from '../../assets/loader/loader.svg';
-import styles from './users.module.css'
 import Preloader from '../common/preloader/Preloader';
 
 

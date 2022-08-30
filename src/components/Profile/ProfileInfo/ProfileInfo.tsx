@@ -1,8 +1,17 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
+import Preloader from '../../common/preloader/Preloader';
+import {ProfileUserType} from '../../../redux/profile-reducer';
 
 
-function ProfileInfo() {
+type ProfileInfoType = {
+    profile: ProfileUserType
+}
+
+function ProfileInfo(props: ProfileInfoType) {
+    if (!props.profile) {
+        return <Preloader/>
+    }
     return (
         <div>
             <div>
@@ -12,7 +21,28 @@ function ProfileInfo() {
             </div>
 
             <div className={s.descriptionBlock}>
-                Ava + Description
+                <div>{props.profile.fullName}</div>
+                <img src={props.profile.photos.large} alt=""/>
+                <div>Обо мне - {props.profile.aboutMe}</div>
+
+                <hr/>
+
+                <div>Contacts -
+                    <div>facebook - {props.profile.contacts.facebook}</div>
+                    <div>vk - {props.profile.contacts.vk}</div>
+                    <div>twitter - {props.profile.contacts.twitter}</div>
+                    <div>instagram - {props.profile.contacts.instagram}</div>
+                    <div>github - {props.profile.contacts.github}</div>
+                </div>
+
+                <hr/>
+
+                <div>
+                    {props.profile.lookingForAJob
+                        ? <div>Ищу работу, Требования - {props.profile.lookingForAJobDescription}</div>
+                        : <div>Не в поисках работы</div>
+                    }
+                </div>
             </div>
         </div>
     )

@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {setAuthUserData} from '../../redux/auth-reducer';
 import {ProfileUserType, setUserProfile} from '../../redux/profile-reducer';
+import {AuthMeApi} from '../../api/api';
 
 
 type MapStateToPropsType = {
@@ -24,15 +25,11 @@ type HeaderContainerType =
 class HeaderContainer extends React.Component<HeaderContainerType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data
+        AuthMeApi.AuthMe().then(data => {
+                if (data.resultCode === 0) {
+                    let {id, email, login} = data.data
                     this.props.setAuthUserData(id, email, login)
                 }
-
             });
     }
 

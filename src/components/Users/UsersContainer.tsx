@@ -1,21 +1,21 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-    followfAC,
+    follow,
+    getUsers,
     setCurrentPageAC,
     setUsersAC,
-    setUsersTotalCountAC, toggleFollowingProgress,
+    toggleFollowingProgress,
     toggleIsFetchingAC,
-    unfollowfAC,
+    unfollow,
     UserType
 } from '../../redux/users-reducer';
-import {Dispatch} from 'redux';
-import axios from 'axios';
+import {compose, Dispatch} from 'redux';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {usersApi} from '../../api/api';
-
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
 type UsersPropsType = {
@@ -27,11 +27,11 @@ type UsersPropsType = {
     unfollow: (userId: number) => void
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (pageNumber: number) => void
-    setTotalUsersCount: (totalCount: number) => void
     isFetching: boolean
     toggleIsFetching: (isFetching: boolean) => void
     followingInProgress: Array<number>
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
 }
 type mapStateToProps = {
     users: Array<UserType>
@@ -41,27 +41,21 @@ type mapStateToProps = {
     isFetching: boolean
     followingInProgress: Array<number>
 }
-type mapDispatchToProps = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (pageNumber: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
-}
+// type mapDispatchToProps = {
+//     follow: (userId: number) => void
+//     unfollow: (userId: number) => void
+//     setUsers: (users: Array<UserType>) => void
+//     setCurrentPage: (pageNumber: number) => void
+//     toggleIsFetching: (isFetching: boolean) => void
+//     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+//     getUsers: (currentPage: number, pageSize: number) => void
+// }
 
 
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-
-        usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items)
-                this.props.setTotalUsersCount(data.totalCount)
-                this.props.toggleIsFetching(false)
-            });
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
@@ -102,13 +96,15 @@ function mapStateToProps(state: AppStateType): mapStateToProps {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch): mapDispatchToProps {
+function mapDispatchToProps(dispatch: Dispatch) {
     return {
         follow: (userId: number) => {
-            dispatch(followfAC(userId))
+            // @ts-ignore
+            dispatch(follow(userId))
         },
         unfollow: (userId: number) => {
-            dispatch(unfollowfAC(userId))
+            // @ts-ignore
+            dispatch(unfollow(userId))
         },
         setUsers: (users: Array<UserType>) => {
             dispatch(setUsersAC(users))
@@ -116,17 +112,24 @@ function mapDispatchToProps(dispatch: Dispatch): mapDispatchToProps {
         setCurrentPage: (pageNumber: number) => {
             dispatch(setCurrentPageAC(pageNumber))
         },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setUsersTotalCountAC(totalCount))
-        },
+
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
         toggleFollowingProgress: (isFetching: boolean, userId: number) => {
             dispatch(toggleFollowingProgress(isFetching,userId ))
+        },
+        getUsers: (currentPage:number, pageSize:number) => {
+
+            // @ts-ignore
+            dispatch(getUsers(currentPage,pageSize))
+
         }
 
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(UsersContainer)

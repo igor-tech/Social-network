@@ -1,17 +1,15 @@
 import {DialogPropsType, MessagePropsType} from '../App';
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
+
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
 type SendMessageAC = {
     type: 'SEND_MESSAGE'
-}
-type UpdateNewMessageBody = {
-    type: 'UPDATE_NEW_MESSAGE_BODY'
-    body: string
+    newMessageBody: string
 }
 
-type ActionsTypes = UpdateNewMessageBody | SendMessageAC
+
+type ActionsTypes = SendMessageAC
 
 
 let initialState: InitialStateType = {
@@ -42,6 +40,7 @@ let initialState: InitialStateType = {
         {id: 7, name: 'Alex', link: 'https://klike.net/uploads/posts/2019-03/1551511784_4.jpg'},
     ],
     newMessageBody: ''
+
 }
 
 export type InitialStateType = {
@@ -53,28 +52,18 @@ export type InitialStateType = {
 const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
+            let body = action.newMessageBody;
             return {
                 ...state,
-                newMessageBody: '',
                 messages: [...state.messages, {id: 8, message: body}]
             }
         default:
             return state;
     }
-    return state;
 }
 
-export const sendMessageActionCreator = (): SendMessageAC => ({type: SEND_MESSAGE})
-export const updateNewMessageBodyCreator = (body: string): UpdateNewMessageBody => ({
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: body
-})
+export const sendMessageAC = (newMessageBody: string): SendMessageAC => ({type: SEND_MESSAGE, newMessageBody})
+
 
 export default dialogsReducer;

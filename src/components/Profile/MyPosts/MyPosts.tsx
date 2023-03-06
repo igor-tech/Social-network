@@ -1,6 +1,8 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import {reduxForm} from 'redux-form';
+import {AddPostForm} from './AddPostForm';
 
 type PostType = {
     id: number
@@ -9,33 +11,21 @@ type PostType = {
 }
 type MyPostsType = {
     posts: Array<PostType>
-    updateNewPost: (text: string) => void
-    addPost: () => void
+    addPost: (newPostBody: string) => void
     newPostText: string
 }
 
 function MyPosts(props: MyPostsType) {
     let postsElement = props.posts.map(p => <Post key={p.id} description={p.description} likesCount={p.likesCount}/>)
 
-    const onAddPost = () => {
-        props.addPost();
+    const AddPostForm = (values: any) => {
+        props.addPost(values.newPostBody)
     }
 
-    let onPostChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let text = e.currentTarget.value
-        props.updateNewPost(text)
-    }
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <div>
-                    <input onChange={onPostChange} value={props.newPostText} placeholder={'write your post'}/>
-                </div>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
-                </div>
-            </div>
+           <AddPostFormRedux onSubmit={AddPostForm}/>
             <div className={s.posts}>
                 {postsElement}
             </div>
@@ -43,5 +33,7 @@ function MyPosts(props: MyPostsType) {
 
     )
 }
+
+const AddPostFormRedux = reduxForm({form: 'AddPostForm'})(AddPostForm)
 
 export default MyPosts;

@@ -56,7 +56,7 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionsT
             let body = action.newMessageBody;
             return {
                 ...state,
-                messages: [...state.messages, {id: 8, message: body}]
+                messages: [...state.messages, {id: Math.random(), message: body}]
             }
         default:
             return state;

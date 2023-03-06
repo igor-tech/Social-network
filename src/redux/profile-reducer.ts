@@ -95,7 +95,7 @@ const profileReducer = (state: ProfileReducerInitialStateType = initialState , a
         case ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, {id: 7, description: action.newMessageBody, likesCount: 0}],
+                posts: [...state.posts, {id: Math.random(), description: action.newMessageBody, likesCount: 0}],
                 newPostText: ''
             }
 

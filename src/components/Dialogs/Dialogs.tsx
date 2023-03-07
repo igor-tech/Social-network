@@ -4,6 +4,7 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {MessagesPagetType} from '../../App';
 import {useForm} from 'react-hook-form';
+import {TextAreaCustom} from '../common/FormsControls/FormsControls';
 
 type DialogsType = {
     messagesPage: MessagesPagetType
@@ -35,9 +36,12 @@ function Dialogs(props: DialogsType) {
 type AddMessageFormType = {
     sendMessageBody: (newMessageBody: string) => void
 }
+type AddMessageUseFormType = {
+    newMessageBody: string
+}
 
 const AddMessageForm = (props: AddMessageFormType) => {
-    const {register, reset, handleSubmit} = useForm()
+    const {register, reset, handleSubmit, formState: {errors}} = useForm<AddMessageUseFormType>()
 
     const onSubmit = (data: any) => {
         props.sendMessageBody(data.newMessageBody)
@@ -45,7 +49,7 @@ const AddMessageForm = (props: AddMessageFormType) => {
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)} style={{display: 'flex', flexDirection: 'column', gap:'10px', width: '200px'}}>
-            <textarea {...register('newMessageBody')} placeholder={'enter your message'}/>
+            <TextAreaCustom register={register} placeholder={'enter your message'} label={'newMessageBody'} errors={errors.newMessageBody}/>
             <button type={'submit'}>Send</button>
         </form>
     )

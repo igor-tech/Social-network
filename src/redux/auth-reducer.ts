@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI, RequestLoginType} from '../api/api';
 import {AppThunk} from './redux-store';
+import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -59,14 +60,18 @@ export const getAuthMe = () => (dispatch: Dispatch) => {
             let {id, email, login} = data.data
             dispatch(setAuthUserData(id, email, login, true))
         }})
-
-
 }
-export const loginTC = (data: RequestLoginType): AppThunk => (dispatch) => {
-    authAPI.login(data).then(data => {
-        if (data.resultCode === 0) {
+export const loginTC = (data: RequestLoginType): AppThunk =>  async (dispatch) => {
+    try {
+        const result = await authAPI.login(data)
+        if (result.resultCode === 0) {
             dispatch(getAuthMe())
-        }})
+        } else {
+            return result
+        }
+    } catch (err) {
+
+    }
 
 }
 export const logoutTC = () => (dispatch: Dispatch) => {

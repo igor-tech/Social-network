@@ -14,11 +14,11 @@ type Inputs = {
 
 const LoginForm = () => {
     const dispatch = useDispatch()
-    const {handleSubmit, register, reset, formState: {errors}} = useForm<Inputs>()
+    const {handleSubmit, register, reset, formState: {errors}, setError} = useForm<Inputs>()
 
-    const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-        dispatch(loginTC(data))
-        reset()
+    const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+        const result = await dispatch(loginTC(data))
+        console.log(result)
     };
 
     return (

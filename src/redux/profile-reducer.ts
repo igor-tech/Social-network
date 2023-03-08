@@ -129,12 +129,12 @@ export const getProfile = (userId: string) => (dispatch: Dispatch) => {
     });
 }
 
-export const getStatus = (userId: string) => (dispatch: Dispatch) => {
+export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userId).then(data => {
         dispatch(setStatus(data))
     });
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
+export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(status).then((response) => {
         if ( response.data.resultCode === 0) {
             dispatch(setStatus(status))

@@ -32,7 +32,7 @@ const Users = (props: UsersPropsType) => {
         <div className={styles.background}>
             <div>
                 {slicedPages.map((p, index) => {
-                    return <span key={index} className={props.currentPage === p ? styles.selectedPage : ''}
+                    return <span key={index} style={{cursor: 'pointer'}} className={props.currentPage === p ? styles.selectedPage : ''}
                                  onClick={() => {
                                      props.onPageChanged(p)
                                  }}> {p} </span>

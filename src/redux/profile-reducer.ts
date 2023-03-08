@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {ProfileApi} from '../api/api';
+import {profileAPI} from '../api/api';
 
 const ADD_POST = 'ADD-POST';
 
@@ -95,7 +95,7 @@ const profileReducer = (state: ProfileReducerInitialStateType = initialState , a
         case ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, {id: Math.random(), description: action.newMessageBody, likesCount: 0}],
+                posts: [{id: Math.random(), description: action.newMessageBody, likesCount: 0}, ...state.posts],
                 newPostText: ''
             }
 
@@ -124,18 +124,18 @@ export const setUserProfile = (profile: any): SetUsersProfileActionType => ({typ
 export const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status})
 
 export const getProfile = (userId: string) => (dispatch: Dispatch) => {
-    ProfileApi.Profile(userId).then(data => {
+    profileAPI.getProfile(userId).then(data => {
         dispatch(setUserProfile(data))
     });
 }
 
 export const getStatus = (userId: string) => (dispatch: Dispatch) => {
-    ProfileApi.getStatus(userId).then(data => {
+    profileAPI.getStatus(userId).then(data => {
         dispatch(setStatus(data))
     });
 }
 export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    ProfileApi.updateStatus(status).then((response) => {
+    profileAPI.updateStatus(status).then((response) => {
         if ( response.data.resultCode === 0) {
             dispatch(setStatus(status))
         }

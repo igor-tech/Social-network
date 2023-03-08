@@ -14,7 +14,7 @@ import {
 import {compose, Dispatch} from 'redux';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
-import {usersApi} from '../../api/api';
+import {usersAPI} from '../../api/api';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
@@ -61,7 +61,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(pageNumber)
-        usersApi.getUsers(pageNumber, this.props.pageSize).then(data => {
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
                 this.props.setUsers(data.items)
                 this.props.toggleIsFetching(false)
             });

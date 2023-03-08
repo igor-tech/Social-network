@@ -1,4 +1,4 @@
-import {usersApi} from '../api/api';
+import {usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
 
 
@@ -144,7 +144,7 @@ export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Di
 
     dispatch(toggleIsFetchingAC(true))
 
-    usersApi.getUsers(currentPage, pageSize).then(data => {
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
 
         dispatch(toggleIsFetchingAC(false))
         dispatch(setUsersAC(data.items))
@@ -157,7 +157,7 @@ export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Di
 export const follow = (userId: number) => (dispatch: Dispatch) => {
 
     dispatch(toggleFollowingProgress(true, userId))
-    usersApi.follow(userId)
+    usersAPI.follow(userId)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(followSucces(userId))
@@ -169,7 +169,7 @@ export const follow = (userId: number) => (dispatch: Dispatch) => {
 export const unfollow = (userId: number) => (dispatch: Dispatch) => {
 
     dispatch(toggleFollowingProgress(true, userId))
-    usersApi.unFollow(userId)
+    usersAPI.unFollow(userId)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(unfollowSucces(userId))

@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 
-export const usersApi = {
+export const usersAPI = {
     getUsers(pageNumber: number = 1, pageSize: number = 10) {
         return instance.get(`users?page=${pageNumber}&count=${pageSize}`)
             .then(response => {
@@ -32,17 +32,29 @@ export const usersApi = {
 }
 
 
-export const AuthMeApi = {
-    AuthMe() {
+export const authAPI = {
+    me() {
         return instance.get(`auth/me`)
+            .then(response => {
+                return response.data
+            })
+    },
+    login(data: RequestLoginType) {
+        return instance.post('auth/login', {...data})
+            .then(response => {
+                return response.data
+            })
+    },
+    logout() {
+        return instance.delete('auth/login')
             .then(response => {
                 return response.data
             })
     }
 }
 
-export const ProfileApi = {
-    Profile(id: string) {
+export const profileAPI = {
+    getProfile(id: string) {
         return instance.get(`profile/${id}`)
             .then(response => {
                 return response.data
@@ -54,8 +66,15 @@ export const ProfileApi = {
                 return response.data
             })
     },
-    updateStatus(status:string) {
+    updateStatus(status: string) {
         return instance.put('profile/status/', {status: status})
 
     }
+}
+
+export type RequestLoginType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
 }

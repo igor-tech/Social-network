@@ -1,15 +1,23 @@
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStateType} from '../../redux/redux-store';
+import {Redirect} from 'react-router-dom';
+import {loginTC} from '../../redux/auth-reducer';
 
 type Inputs = {
-    [key: string]: string
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
 };
 
 const LoginForm = () => {
+    const dispatch = useDispatch()
     const {handleSubmit, register, reset, formState: {errors}} = useForm<Inputs>()
 
-    const onSubmit: SubmitHandler<Inputs> = data => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+        dispatch(loginTC(data))
         reset()
     };
 
@@ -18,7 +26,7 @@ const LoginForm = () => {
               style={{display: 'flex', flexDirection: 'column', gap: '5px', width: '200px'}}>
             <input {...register('email', {
                 required: 'field is required'
-            })} placeholder={'Email'} type={'email'} />
+            })} placeholder={'Email'} type={'email'}/>
             {errors?.email && <div style={{color: 'red', fontSize: '14px'}}>{errors.email.message}</div>}
             <input {...register('password', {
                 required: 'field is required',
@@ -40,7 +48,10 @@ const LoginForm = () => {
 
 
 const Login = () => {
-
+    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+    if (isAuth) {
+        return <Redirect to="/profile" />
+    }
     return (
         <div style={{'padding': '20px', 'color': 'white'}}>
             <h1>Login</h1>

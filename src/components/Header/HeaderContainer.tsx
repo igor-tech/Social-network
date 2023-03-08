@@ -11,7 +11,7 @@ type MapStateToPropsType = {
     login: string
 }
 type MapDispatchToPropsType = {
-    setAuthUserData: (userId: number, email: string, login: string) => void
+    setAuthUserData: (userId: number, email: string, login: string, isAuth: boolean) => void
     setUserProfile: (profile: any) => void
     getAuthMe: () => void
 }

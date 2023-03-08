@@ -10,16 +10,26 @@ type Inputs = {
     password: string
     rememberMe: boolean
     captcha?: boolean
+    general?: string
 };
+const styleError = {
+    color: 'red',
+    fontSize: '14px'
+}
 
 const LoginForm = () => {
     const dispatch = useDispatch()
-    const {handleSubmit, register, reset, formState: {errors}, setError} = useForm<Inputs>()
+    const {handleSubmit, register, formState: {errors}, setError, clearErrors} = useForm<Inputs>()
 
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-        const result = await dispatch(loginTC(data))
-        console.log(result)
+        const res = await dispatch(loginTC(data))
+        // {res?.messages.length > 0 && setError('general', { type: 'custom', message: res.messages[0] })}
+
+
     };
+    // const clearErrorHandler = () => {
+    //     clearErrors('general')
+    // }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}
@@ -27,15 +37,17 @@ const LoginForm = () => {
             <input {...register('email', {
                 required: 'field is required'
             })} placeholder={'Email'} type={'email'}/>
-            {errors?.email && <div style={{color: 'red', fontSize: '14px'}}>{errors.email.message}</div>}
+            {errors?.email && <div style={styleError}>{errors.email.message}</div>}
             <input {...register('password', {
                 required: 'field is required',
                 minLength: {
                     value: 8,
                     message: 'password should be more 8 symbols'
-                }
+                },
+
             })} placeholder={'Password'} type={'password'}/>
-            {errors?.password && <div style={{color: 'red', fontSize: '14px'}}>{errors.password.message}</div>}
+            {errors?.password && <div style={styleError}>{errors.password.message}</div>}
+            {/*<ErrorMessage name={'general'} errors={errors} render={({ message }) => <div style={styleError}>{message}</div>}/>*/}
             <label>
                 remember me
                 <input {...register('rememberMe')} type={'checkbox'}/>
@@ -50,7 +62,7 @@ const LoginForm = () => {
 const Login = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     if (isAuth) {
-        return <Redirect to="/profile" />
+        return <Redirect to={`/profile`} />
     }
     return (
         <div style={{'padding': '20px', 'color': 'white'}}>

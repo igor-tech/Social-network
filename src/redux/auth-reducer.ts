@@ -1,7 +1,6 @@
 import {Dispatch} from 'redux';
 import {authAPI, RequestLoginType} from '../api/api';
 import {AppThunk} from './redux-store';
-import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -39,8 +38,12 @@ const authReducer = (state: AuthReducerInitialStateType = initialState, action: 
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth: action.data.isAuth
+                isAuth: action.data.isAuth,
+                email: action.data.email,
+                login: action.data.login,
+                id: action.data.userId
+
+
             }
         default:
             return state

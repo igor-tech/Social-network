@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import {BrowserRouter, Route} from 'react-router-dom';
@@ -10,6 +10,9 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/login/Login';
+import {useAppDispatch, useAppSelector} from './redux/redux-store';
+import {getAuthMeTC} from './redux/auth-reducer';
+import {Space, Spin} from 'antd';
 
 export type PostPropsType = {
     id: number
@@ -49,6 +52,16 @@ export type StatePropsType = {
 }
 
 function App() {
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const dispatch = useAppDispatch()
+    useEffect( () => {
+         dispatch(getAuthMeTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <Space  style={{height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex:  100 }}><Spin size="large"/></Space>
+    }
+
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>

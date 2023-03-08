@@ -15,7 +15,6 @@ import {compose, Dispatch} from 'redux';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {usersAPI} from '../../api/api';
-import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
 type UsersPropsType = {
@@ -130,6 +129,5 @@ function mapDispatchToProps(dispatch: Dispatch) {
 }
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
+    connect(mapStateToProps, mapDispatchToProps)
 )(UsersContainer)

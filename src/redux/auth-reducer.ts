@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI, RequestLoginType} from '../api/api';
 import {AppThunk} from './redux-store';
+import {setInitializedAC} from './app-reducer';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -56,21 +57,27 @@ export const setAuthUserData = (userId: number | null, email: string | null, log
 })
 
 
-export const getAuthMe = () => (dispatch: Dispatch) => {
-    authAPI.me()
-        .then(data => {
-        if (data.resultCode === 0) {
-            let {id, email, login} = data.data
+export const getAuthMeTC = () => async (dispatch: Dispatch) => {
+    try {
+        const res = await authAPI.me()
+        if (res.resultCode === 0) {
+            let {id, email, login} = res.data
             dispatch(setAuthUserData(id, email, login, true))
-        }})
+        }
+    } catch (err) {
+        throw new Error(err as string)
+    } finally {
+        dispatch(setInitializedAC(true))
+    }
+
 }
 export const loginTC = (data: RequestLoginType): AppThunk =>  async (dispatch) => {
     try {
         const result = await authAPI.login(data)
         if (result.resultCode === 0) {
-            dispatch(getAuthMe())
+            await dispatch(getAuthMeTC())
         } else {
-            return result
+            return result.data
         }
     } catch (err) {
 

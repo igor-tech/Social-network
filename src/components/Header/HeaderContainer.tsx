@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {getAuthMe, setAuthUserData} from '../../redux/auth-reducer';
+import {getAuthMeTC, setAuthUserData} from '../../redux/auth-reducer';
 import {setUserProfile} from '../../redux/profile-reducer';
 
 
@@ -39,4 +39,4 @@ const mapStateToProps = (state: AppStateType):MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {setAuthUserData, setUserProfile,getAuthMe})(HeaderContainer);
+export default connect(mapStateToProps, {setAuthUserData, setUserProfile,getAuthMe: getAuthMeTC})(HeaderContainer);

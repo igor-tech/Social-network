@@ -11,10 +11,10 @@ type PostType = {
 type MyPostsType = {
     posts: Array<PostType>
     addPost: (newPostBody: string) => void
-    newPostText: string
 }
 
-function MyPosts(props: MyPostsType) {
+const MyPosts = React.memo((props: MyPostsType) => {
+    console.log('Render yo')
     let postsElement = props.posts.map(p => <Post key={p.id} description={p.description} likesCount={p.likesCount}/>)
     return (
         <div className={s.postsBlock}>
@@ -25,6 +25,6 @@ function MyPosts(props: MyPostsType) {
             </div>
         </div>
     )
-}
+})
 
 export default MyPosts;

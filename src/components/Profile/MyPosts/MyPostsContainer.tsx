@@ -1,29 +1,33 @@
 import React from 'react';
-import {addPostActionCreator, ProfileReducerInitialStateType} from '../../../redux/profile-reducer';
+import {addPostActionCreator} from '../../../redux/profile-reducer';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-import {Dispatch} from 'redux';
 import myPosts from './MyPosts';
+import {Dispatch} from 'redux';
 
 
 type MapDispatchPropsType = {
     addPost: (newMessageBody: string) => void
 }
+type PostsType = {
+    id: number,
+    description: string,
+    likesCount: number
+}
 
-
+type ProfileReducerInitialStateType = {
+    posts: Array<PostsType>,
+}
 const mapStateToProps = (state: AppStateType): ProfileReducerInitialStateType => {
     return {
-        newPostText: state.profilePage.newPostText,
         posts: state.profilePage.posts,
-        profile: state.profilePage.profile,
-        status: state.profilePage.status
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        addPost: (newMessageBody: string) => {
+        addPost: ((newMessageBody: string) => {
             dispatch(addPostActionCreator(newMessageBody))
-        }
+        })
     }
 }
 

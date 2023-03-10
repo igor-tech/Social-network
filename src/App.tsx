@@ -55,12 +55,19 @@ function App() {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
 
-    useEffect( () => {
-         dispatch(getAuthMeTC())
+    useEffect(() => {
+        dispatch(getAuthMeTC())
     }, [])
 
     if (!isInitialized) {
-        return <Space  style={{height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex:  100 }}><Spin size="large"/></Space>
+        return <Space
+            style={{
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 100
+            }}><Spin size="large"/></Space>
     }
 
     return (

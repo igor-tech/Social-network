@@ -54,6 +54,7 @@ export type StatePropsType = {
 function App() {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
+
     useEffect( () => {
          dispatch(getAuthMeTC())
     }, [])

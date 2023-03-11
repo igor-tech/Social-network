@@ -15,7 +15,8 @@ type MyPostsType = {
 
 const MyPosts = React.memo((props: MyPostsType) => {
     console.log('Render yo')
-    let postsElement = props.posts.map(p => <Post key={p.id} description={p.description} likesCount={p.likesCount}/>)
+    let postsElement = [...props.posts].map(p => <Post key={p.id} description={p.description}
+                                                       likesCount={p.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>

@@ -43,23 +43,23 @@ export type ProfileReducerInitialStateType = {
 
 const profileReducer = (state: ProfileReducerInitialStateType = initialState, action: ActionsTypes): ProfileReducerInitialStateType => {
     switch (action.type) {
-        case 'ADD_POST':
+        case 'profile/ADD_POST':
             return {
                 ...state,
                 posts: [{id: Math.random(), description: action.newMessageBody, likesCount: 0}, ...state.posts],
                 newPostText: ''
             }
-        case 'SET_USER_PROFILE':
+        case 'profile/SET_USER_PROFILE':
             return {
                 ...state,
                 profile: action.profile
             }
-        case 'SET_STATUS':
+        case 'profile/SET_STATUS':
             return {
                 ...state,
                 status: action.status
             }
-        case 'DELETE_POST':
+        case 'profile/DELETE_POST':
             return {
                 ...state,
                 posts: [...state.posts].filter(p => p.id !== action.postId)
@@ -70,10 +70,10 @@ const profileReducer = (state: ProfileReducerInitialStateType = initialState, ac
 }
 
 //actions creators
-export const addPostAC = (newMessageBody: string) => ({type: 'ADD_POST', newMessageBody} as const)
-export const deletePostAC = (postId: number) => ({type: 'DELETE_POST', postId} as const)
-export const setUserProfileAC = (profile: ProfileUserType) => ({type: 'SET_USER_PROFILE', profile} as const)
-export const setStatusAC = (status: string) => ({type: 'SET_STATUS', status} as const)
+export const addPostAC = (newMessageBody: string) => ({type: 'profile/ADD_POST', newMessageBody} as const)
+export const deletePostAC = (postId: number) => ({type: 'profile/DELETE_POST', postId} as const)
+export const setUserProfileAC = (profile: ProfileUserType) => ({type: 'profile/SET_USER_PROFILE', profile} as const)
+export const setStatusAC = (status: string) => ({type: 'profile/SET_STATUS', status} as const)
 
 //thunk
 export const getProfileTC = (userId: string) => (dispatch: Dispatch) => {

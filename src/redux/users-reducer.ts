@@ -12,15 +12,10 @@ const initialState = {
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
     switch (action.type) {
-        case 'users/FOLLOW':
+        case 'users/FOLLOW_UNFOLLOW':
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
-            }
-        case 'users/UNFOLLOW':
-            return {
-                ...state,
-                users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
+                users: state.users.map(u => u.id === action.userId ? {...u, followed: action.followed} : u)
             }
         case 'users/SET_USERS':
             return {
@@ -55,8 +50,7 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 }
 
 //action creators
-export const followSuccessAC = (userId: number) => ({type: 'users/FOLLOW', userId} as const)
-export const unfollowSuccessAC = (userId: number) => ({type: 'users/UNFOLLOW', userId} as const)
+export const followUnfollowAC = (userId: number, followed: boolean) => ({type: 'users/FOLLOW_UNFOLLOW', userId, followed} as const)
 export const setUsersAC = (users: Array<UserType>) => ({type: 'users/SET_USERS', users} as const)
 export const setCurrentPageAC = (currentPage: number) => ({type: 'users/SET_CURRENT_PAGE', currentPage} as const)
 export const setUsersTotalCountAC = (totalCount: number) => ({type: 'users/SET_TOTAL_USERS_COUNT', totalCount} as const)
@@ -86,7 +80,7 @@ export const followTC = (userId: number) => async (dispatch: Dispatch) => {
     try {
         const res = await usersAPI.follow(userId)
         if (res.resultCode === 0) {
-            dispatch(followSuccessAC(userId))
+            dispatch(followUnfollowAC(userId, true))
         }
     } catch (err) {
         throw new Error(err as string)
@@ -99,7 +93,7 @@ export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
     try {
         const res = await usersAPI.unFollow(userId)
         if (res.resultCode === 0) {
-            dispatch(unfollowSuccessAC(userId))
+            dispatch(followUnfollowAC(userId, false))
         }
     } catch (err) {
         throw new Error(err as string)
@@ -110,8 +104,7 @@ export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
 
 //types
 type ActionsTypes =
-    | ReturnType<typeof followSuccessAC>
-    | ReturnType<typeof unfollowSuccessAC>
+    | ReturnType<typeof followUnfollowAC>
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setUsersTotalCountAC>

@@ -3,6 +3,7 @@ import {UserType} from '../../redux/users-reducer';
 import styles from './users.module.css';
 import avatarPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
+import {Pagination} from './Pagination';
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -16,30 +17,13 @@ type UsersPropsType = {
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
-const Users = (props: UsersPropsType) => {
-
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-    let curP = props.currentPage;
-    let curPF = ((curP - 5) < 0) ? 0 : curP - 5;
-    let curPL = curP + 5;
-    let slicedPages = pages.slice(curPF, curPL);
-
+export const Users = ({follow, onPageChanged, followingInProgress, unfollow, users, pageSize, currentPage, totalUsersCount,
+                      }: UsersPropsType) => {
     return (
         <div className={styles.background}>
-            <div>
-                {slicedPages.map((p, index) => {
-                    return <span key={index} style={{cursor: 'pointer'}} className={props.currentPage === p ? styles.selectedPage : ''}
-                                 onClick={() => {
-                                     props.onPageChanged(p)
-                                 }}> {p} </span>
-                })}
-            </div>
+
             {
-                props.users.map(u => <div key={u.id}>
+                users.map(u => <div key={u.id}>
                     <div className={styles.users}>
                         <div className={styles.avatar}>
                             <div>
@@ -50,8 +34,14 @@ const Users = (props: UsersPropsType) => {
                             </div>
                             <div>
                                 {u.followed
-                                    ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
-                                    : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {props.follow(u.id)}}>Follow</button>
+                                    ? <button disabled={followingInProgress.some(id => id === u.id)}
+                                              onClick={() => {
+                                                  unfollow(u.id)
+                                              }}>Unfollow</button>
+                                    : <button disabled={followingInProgress.some(id => id === u.id)}
+                                              onClick={() => {
+                                                  follow(u.id)
+                                              }}>Follow</button>
                                 }
                             </div>
                         </div>
@@ -69,12 +59,13 @@ const Users = (props: UsersPropsType) => {
 
                 </div>)
             }
-            <button onClick={() => {
-            }} className={styles.btn}>...More
-            </button>
+            <div style={{display: 'flex', position: 'relative', justifyContent: 'end'}}>
+                <button onClick={() => {
+                }} className={styles.btn}>...More
+                </button>
+                <Pagination onPageChanged={onPageChanged} currentPage={currentPage} pageSize={pageSize}
+                            totalUsersCount={totalUsersCount}/>
+            </div>
         </div>
     );
 }
-
-
-export default Users;

@@ -3,19 +3,16 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfileUserType} from '../../redux/profile-reducer';
 
-
 type ProfileTypeProps = {
     profile: ProfileUserType
     status: string
     updateStatus: (status: string) => void
 }
 
-
-function Profile(props: ProfileTypeProps) {
-
+function Profile({profile, status, updateStatus}: ProfileTypeProps) {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileInfo profile={profile} status={status} updateStatus={updateStatus}/>
             <MyPostsContainer
             />
         </div>

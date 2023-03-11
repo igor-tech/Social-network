@@ -11,40 +11,21 @@ type ProfileInfoType = {
     updateStatus: (status: string) => void
 }
 
-function ProfileInfo(props: ProfileInfoType) {
-    if (!props.profile) {
+function ProfileInfo({profile, status,updateStatus}: ProfileInfoType) {
+    if (!profile) {
         return <Preloader/>
     }
     return (
         <div>
-            {/*<div>*/}
-            {/*    <img className={s.backgroundImage}*/}
-            {/*         src="https://www.finakota-souvlaki.gr/wp-content/uploads/2019/08/mt-sample-background-1000x600.jpg.webp"*/}
-            {/*         alt="Background"/>*/}
-            {/*</div>*/}
-
             <div className={s.descriptionBlock}>
-                <div>{props.profile.fullName}</div>
-                <img src={props.profile.photos.large} alt=""/>
-                {/*<ProfileStatus status={props.status} updateStatus={props.updateStatus}/>*/}
-                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-                <div>Обо мне - {props.profile.aboutMe}</div>
-
-
-
-                {/*<div>Contacts -*/}
-                {/*    <div>facebook - {props.profile.contacts.facebook}</div>*/}
-                {/*    <div>vk - {props.profile.contacts.vk}</div>*/}
-                {/*    <div>twitter - {props.profile.contacts.twitter}</div>*/}
-                {/*    <div>instagram - {props.profile.contacts.instagram}</div>*/}
-                {/*    <div>github - {props.profile.contacts.github}</div>*/}
-                {/*</div>*/}
-
+                <div>{profile.fullName}</div>
+                <img src={profile.photos.large} alt=""/>
+                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                <div>Обо мне - {profile.aboutMe}</div>
                 <hr/>
-
                 <div>
-                    {props.profile.lookingForAJob
-                        ? <div>Ищу работу, Требования - {props.profile.lookingForAJobDescription}</div>
+                    {profile.lookingForAJob
+                        ? <div>Ищу работу, Требования - {profile.lookingForAJobDescription}</div>
                         : <div>Не в поисках работы</div>
                     }
                 </div>

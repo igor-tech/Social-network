@@ -12,7 +12,7 @@ import {
     UserType
 } from '../../redux/users-reducer';
 import {compose} from 'redux';
-import Users from './Users';
+import {Users} from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {usersAPI} from '../../api/api';
 import {

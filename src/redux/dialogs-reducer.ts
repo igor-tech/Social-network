@@ -1,18 +1,6 @@
 import {DialogPropsType, MessagePropsType} from '../App';
 
-
-const SEND_MESSAGE = 'SEND_MESSAGE';
-
-type SendMessageAC = {
-    type: 'SEND_MESSAGE'
-    newMessageBody: string
-}
-
-
-type ActionsTypes = SendMessageAC
-
-
-let initialState: InitialStateType = {
+const initialState: DialogsContainerType = {
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How are you?'},
@@ -21,7 +9,7 @@ let initialState: InitialStateType = {
         {id: 5, message: 'Yoo!'},
         {id: 6, message: 'Yoo!'},
         {id: 7, message: 'Yoo!'},
-    ],
+    ] as Array<MessagePropsType>,
     dialogs: [
         {id: 1, name: 'Igor', link: 'https://klike.net/uploads/posts/2019-03/1551511801_1.jpg'},
         {
@@ -38,21 +26,15 @@ let initialState: InitialStateType = {
         {id: 5, name: 'Ivan', link: 'https://vjoy.cc/wp-content/uploads/2020/10/1551596754_23.jpg'},
         {id: 6, name: 'David', link: 'https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg'},
         {id: 7, name: 'Alex', link: 'https://klike.net/uploads/posts/2019-03/1551511784_4.jpg'},
-    ],
+    ] as Array<DialogPropsType>,
     newMessageBody: ''
 
 }
 
-export type InitialStateType = {
-    messages: Array<MessagePropsType>
-    dialogs: Array<DialogPropsType>
-    newMessageBody: string
-}
-
-const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'dialogs/SEND_MESSAGE':
             let body = action.newMessageBody;
             return {
                 ...state,
@@ -63,7 +45,14 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionsT
     }
 }
 
-export const sendMessageAC = (newMessageBody: string): SendMessageAC => ({type: SEND_MESSAGE, newMessageBody})
+export const sendMessageAC = (newMessageBody: string) => ({type: 'dialogs/SEND_MESSAGE', newMessageBody} as const)
 
+//types
+type ActionsTypes = ReturnType<typeof sendMessageAC>
+type InitialStateType = typeof initialState
 
-export default dialogsReducer;
+export type DialogsContainerType = {
+    messages: Array<MessagePropsType>
+    dialogs: Array<DialogPropsType>
+    newMessageBody: string
+}

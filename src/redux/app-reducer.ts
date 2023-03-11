@@ -1,9 +1,8 @@
-type ActionsTypes = ReturnType<typeof setInitializedAC>
 
-let initialState = {
+
+const initialState = {
     isInitialized: false
 }
-type appReducerType = typeof initialState
 
 export const appReducer = (state: appReducerType = initialState, action: ActionsTypes): appReducerType => {
     switch (action.type) {
@@ -20,5 +19,8 @@ export const appReducer = (state: appReducerType = initialState, action: Actions
 //action creators
 export const setInitializedAC = (isInitialized: boolean) => ({type: 'SET_INITIALIZED', isInitialized} as const)
 
-//thunks
+//types
+type ActionsTypes = ReturnType<typeof setInitializedAC>
+
+type appReducerType = typeof initialState
 

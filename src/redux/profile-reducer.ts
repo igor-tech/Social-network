@@ -41,7 +41,7 @@ export type ProfileReducerInitialStateType = {
 }
 
 
-const profileReducer = (state: ProfileReducerInitialStateType = initialState, action: ActionsTypes): ProfileReducerInitialStateType => {
+export const profileReducer = (state: ProfileReducerInitialStateType = initialState, action: ActionsTypes): ProfileReducerInitialStateType => {
     switch (action.type) {
         case 'profile/ADD_POST':
             return {
@@ -76,23 +76,32 @@ export const setUserProfileAC = (profile: ProfileUserType) => ({type: 'profile/S
 export const setStatusAC = (status: string) => ({type: 'profile/SET_STATUS', status} as const)
 
 //thunk
-export const getProfileTC = (userId: string) => (dispatch: Dispatch) => {
-    profileAPI.getProfile(userId).then(data => {
-        dispatch(setUserProfileAC(data))
-    });
+export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
+    try {
+        const res = await profileAPI.getProfile(userId)
+        dispatch(setUserProfileAC(res))
+    } catch (err) {
+        console.warn(err as string)
+    }
+
 }
-export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then(data => {
-        dispatch(setStatusAC(data))
-    });
+export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
+    try {
+        const res = await profileAPI.getStatus(userId)
+        dispatch(setStatusAC(res))
+    } catch (err) {
+        console.warn(err as string)
+    }
 }
-export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then((response) => {
-        if (response.data.resultCode === 0) {
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+    try {
+        const res = await profileAPI.updateStatus(status)
+        if (res.data.resultCode === 0) {
             dispatch(setStatusAC(status))
         }
-
-    });
+    } catch (err) {
+        console.warn(err as string)
+    }
 }
 
 
@@ -129,5 +138,3 @@ type PostsType = {
     description: string,
     likesCount: number
 }
-
-export default profileReducer;

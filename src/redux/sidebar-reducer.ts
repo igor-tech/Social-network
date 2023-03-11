@@ -1,5 +1,3 @@
-import {SideBarType} from '../App';
-
 let initialState = {
     friends: [
         {id: 1, name: 'igor', link: 'https://klike.net/uploads/posts/2019-03/1551511801_1.jpg'},
@@ -9,8 +7,11 @@ let initialState = {
 }
 
 
-const sidebarReducer = (state: SideBarType = initialState, action: any) => {
+export const sidebarReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     return state
 }
 
-export default sidebarReducer
+//types
+type InitialStateType = typeof initialState
+
+

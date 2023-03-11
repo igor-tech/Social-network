@@ -6,7 +6,7 @@ import {
     getUsersTC,
     setCurrentPageAC,
     setUsersAC,
-    toggleFollowingProgress,
+    toggleFollowingProgressAC,
     toggleIsFetchingAC,
     unfollowTC,
     UserType
@@ -111,7 +111,7 @@ function mapDispatchToProps(dispatch: AppDispatch) {
             dispatch(toggleIsFetchingAC(isFetching))
         },
         toggleFollowingProgress: (isFetching: boolean, userId: number) => {
-            dispatch(toggleFollowingProgress(isFetching,userId ))
+            dispatch(toggleFollowingProgressAC(isFetching,userId ))
         },
         getUsers: (currentPage:number, pageSize:number) => {
             dispatch(getUsersTC(currentPage,pageSize))

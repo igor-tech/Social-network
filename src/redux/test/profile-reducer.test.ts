@@ -1,6 +1,6 @@
-import profileReducer, {
+import {
     addPostAC,
-    deletePostAC,
+    deletePostAC, profileReducer,
     ProfileReducerInitialStateType,
     ProfileUserType,
     setStatusAC,

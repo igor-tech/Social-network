@@ -28,8 +28,6 @@ test('new post should be added', () => {
 
     const result = profileReducer(initialState, action)
 
-
-
     expect(result.posts.length).toBe(5)
     expect(result.posts[0].description).toBe('New Post')
     expect(result.posts[0].likesCount).toBe(0)

@@ -21,7 +21,7 @@ function ProfileInfo({profile, status,updateStatus}: ProfileInfoType) {
                 <div>{profile.fullName}</div>
                 <img src={profile.photos.large} alt=""/>
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-                <div>Обо мне - {profile.aboutMe}</div>
+                {profile.aboutMe && <div>Обо мне - {profile.aboutMe}</div>}
                 <hr/>
                 <div>
                     {profile.lookingForAJob

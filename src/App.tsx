@@ -51,7 +51,7 @@ export type StatePropsType = {
     sideBarPage: SideBarType
 }
 
-function App() {
+export function App() {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
 
@@ -89,4 +89,3 @@ function App() {
     )
 }
 
-export default App;

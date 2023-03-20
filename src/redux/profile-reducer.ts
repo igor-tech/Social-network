@@ -1,5 +1,7 @@
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
+import {AppThunk} from './redux-store';
+import {InputsProfileData} from '../components/Profile/ProfileInfo/ProfileInfo';
 
 
 let initialState = {
@@ -10,33 +12,13 @@ let initialState = {
         {id: 4, description: 'YOO, subscribers!', likesCount: 10},
     ],
     newPostText: '',
-    profile: {
-        aboutMe: '',
-        contacts: {
-            facebook: '',
-            website: '',
-            vk: '',
-            twitter: '',
-            instagram: '',
-            youtube: '',
-            github: '',
-            mainLink: ''
-        },
-        lookingForAJob: false,
-        lookingForAJobDescription: '',
-        fullName: '',
-        userId: 7,
-        photos: {
-            small: '',
-            large: ''
-        }
-    },
+    profile: {} as ProfileUserType,
     status: ''
 }
 export type ProfileReducerInitialStateType = {
     posts: Array<PostsType>,
     newPostText: string,
-    profile: ProfileUserType,
+    profile: ProfileUserType
     status: string
 }
 
@@ -69,6 +51,11 @@ export const profileReducer = (state: ProfileReducerInitialStateType = initialSt
                 ...state,
                 profile: {...state.profile, photos: action.photos}
             }
+        case 'profile/SET_PROFILE':
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
     }
@@ -80,6 +67,7 @@ export const deletePostAC = (postId: number) => ({type: 'profile/DELETE_POST', p
 export const setUserProfileAC = (profile: ProfileUserType) => ({type: 'profile/SET_USER_PROFILE', profile} as const)
 export const setStatusAC = (status: string) => ({type: 'profile/SET_STATUS', status} as const)
 export const savePhotosAC = (photos: any) => ({type: 'profile/SET_PHOTOS', photos} as const)
+export const saveProfileAC = (profile: InputsProfileData) => ({type: 'profile/SET_PROFILE', profile} as const)
 
 //thunk
 export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
@@ -116,10 +104,24 @@ export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
         if (res.data.resultCode === 0) {
             dispatch(savePhotosAC(res.data.data.photos))
         }
-    }  catch (err) {
+    } catch (err) {
         console.warn(err as string)
     }
 
+}
+
+export const saveProfileTC = (newProfile: InputsProfileData): AppThunk => async (dispatch, getState) => {
+    let userId = getState().auth.id
+    try {
+        const res = await profileAPI.saveProfile(newProfile)
+        if (res.data.resultCode === 0) {
+            await dispatch(getProfileTC(userId!.toString()))
+        } else {
+            return res.data.messages[0]
+        }
+    } catch (err) {
+        console.warn(err as string)
+    }
 }
 
 
@@ -130,17 +132,18 @@ type ActionsTypes =
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof savePhotosAC>
+    | ReturnType<typeof saveProfileAC>
 
 export type ProfileUserType = {
     aboutMe: string,
     contacts?: {
-        facebook: string,
-        website: string,
-        vk: string,
-        twitter: string,
-        instagram: string,
-        youtube: string,
         github: string,
+        vk: string,
+        facebook: string,
+        instagram: string,
+        twitter: string,
+        website: string,
+        youtube: string,
         mainLink: string
     },
     lookingForAJob: boolean,

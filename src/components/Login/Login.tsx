@@ -1,7 +1,7 @@
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType} from '../../redux/redux-store';
+import {AppStateType, useAppSelector} from '../../redux/redux-store';
 import {Redirect} from 'react-router-dom';
 import {loginTC} from '../../redux/auth-reducer';
 
@@ -19,14 +19,20 @@ const styleError = {
 
 const LoginForm = () => {
     const dispatch = useDispatch()
-    const {handleSubmit, register, formState: {errors}} = useForm<Inputs>()
+    const {handleSubmit, register, formState: {errors}, setError} = useForm<Inputs>()
+    const captchaUrl = useAppSelector(state => state.auth.captcha)
 
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-        await dispatch(loginTC(data))
+        try {
+            const res  = await dispatch(loginTC(data))
+            setError('password', {message: res as unknown as string})
+        } catch (err) {
+            console.warn(err as string)
+        }
     };
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)} style={{display: 'flex', flexDirection: 'column', gap: '5px', width: '200px'}}>
+        <form onSubmit={handleSubmit(onSubmit)}
+              style={{display: 'flex', flexDirection: 'column', gap: '5px', width: '200px'}}>
 
             <input {...register('email', {
                 required: 'field is required'
@@ -43,7 +49,11 @@ const LoginForm = () => {
                 remember me
                 <input {...register('rememberMe')} type={'checkbox'}/>
             </label>
-
+            {captchaUrl && <div>
+                <img src={captchaUrl as string} alt="captcha"/>
+                <input {...register('captcha', {required: 'field is required'})} placeholder={'Symbols from image'} type={'text'}/>
+                {errors?.captcha && <div style={styleError}>{errors.captcha.message}</div>}
+            </div>}
             <input type="submit"/>
         </form>
     );

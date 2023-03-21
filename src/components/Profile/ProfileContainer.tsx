@@ -11,7 +11,7 @@ import {
 } from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
-import {InputsProfileData} from './ProfileInfo/ProfileInfo';
+import {InputsProfileData} from './ProfileInfo/ProfileDataForm';
 
 
 

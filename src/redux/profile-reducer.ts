@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 import {AppThunk} from './redux-store';
-import {InputsProfileData} from '../components/Profile/ProfileInfo/ProfileInfo';
+import {InputsProfileData} from '../components/Profile/ProfileInfo/ProfileDataForm';
 
 
 let initialState = {

@@ -51,8 +51,17 @@ export const authAPI = {
             .then(response => {
                 return response.data
             })
+    },
+}
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get('security/get-captcha-url')
+            .then(res => {
+                return res.data
+            })
     }
 }
+
 
 export const profileAPI = {
     getProfile(id: string) {
@@ -91,4 +100,11 @@ export type RequestLoginType = {
     password: string
     rememberMe: boolean
     captcha?: boolean
+}
+
+export type ResponseLoginType<T = {}> = {
+    data: T
+    fieldsErrors: []
+    messages: [string]
+    resultCode: number
 }

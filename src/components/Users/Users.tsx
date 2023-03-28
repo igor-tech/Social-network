@@ -4,6 +4,7 @@ import styles from './users.module.css';
 import avatarPhoto from '../../assets/images/avatar.png';
 import {NavLink} from 'react-router-dom';
 import {Pagination} from './Pagination';
+import classNames from 'classnames';
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -28,7 +29,7 @@ export const Users = ({follow, onPageChanged, followingInProgress, unfollow, use
                         <div className={styles.avatar}>
                             <div>
                                 <NavLink to={'/profile/' + u.id}>
-                                    <img className={styles.photo} src={u.photos.small ? u.photos.small : avatarPhoto}
+                                    <img className={classNames(styles.photo)} src={u.photos.small ? u.photos.small : avatarPhoto}
                                          alt="photoURL"/>
                                 </NavLink>
                             </div>

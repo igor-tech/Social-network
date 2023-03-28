@@ -55,9 +55,13 @@ const UsersContainerLazy = React.lazy(() => import('./components/Users/UsersCont
 export function App() {
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
-
+    const catchAllUnhandledErrors = () => {
+        alert('Some error occurred')
+    }
     useEffect(() => {
         dispatch(getAuthMeTC())
+        window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
+        return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
     }, [])
 
     if (!isInitialized) {

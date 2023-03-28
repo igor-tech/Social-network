@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {Route, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import {useAppDispatch, useAppSelector} from './redux/redux-store';
 import {getAuthMeTC} from './redux/auth-reducer';
 import Preloader from './components/common/preloader/Preloader';
+import {Routes} from 'react-router';
 
 export type PostPropsType = {
     id: number
@@ -74,15 +75,15 @@ export function App() {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Switch>
-                        <Route path="/news" component={News}/>
-                        <Route path="/music" component={Music}/>
-                        <Route path="/settings" component={Settings}/>
-                        <Route path="/dialogs" render={() => <DialogsContainerLazy/>}/>
-                        <Route path="/profile/:userId?" render={() => <ProfileContainerLazy/>}/>
-                        <Route path="/users" render={() => <UsersContainerLazy/>}/>
-                        <Route path="/login" render={() => <Login/>}/>
-                    </Switch>
+                    <Routes>
+                        <Route path="/news" element={<News/>}/>
+                        <Route path="/music" element={Music}/>
+                        <Route path="/settings" element={Settings}/>
+                        <Route path="/dialogs" element={<DialogsContainerLazy/>}/>
+                        <Route path="/profile/:userId?" element={<ProfileContainerLazy/>}/>
+                        <Route path="/users" element={<UsersContainerLazy/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                    </Routes>
                 </div>
             </div>
         </Suspense>

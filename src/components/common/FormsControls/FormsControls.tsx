@@ -7,7 +7,7 @@ interface IFormValues {
 
 type InputProps = {
     label: Path<IFormValues>;
-    register: UseFormRegister<IFormValues>;
+    register:  UseFormRegister<IFormValues>;
     errors?: FieldError
     placeholder?: string
 }

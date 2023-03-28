@@ -1,6 +1,5 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {TextAreaCustom} from '../../common/FormsControls/FormsControls';
 
 type AddPostFormType = {
     newPostBody: (newPostBody: string) => void
@@ -20,7 +19,10 @@ export const AddPostForm = (props: AddPostFormType) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}
               style={{display: 'flex', flexDirection: 'column', gap: '10px', width: '200px'}}>
-            <TextAreaCustom register={register} errors={errors.newPostProfile} label={'newPostProfile'} placeholder={'enter your message'}/>
+            <textarea {...register('newPostProfile', {
+                required: 'field is required',
+            })} placeholder={'enter your message'}/>
+            {errors && <div style={{color: 'red', fontSize: '14px'}}>{errors.newPostProfile}</div>}
             <button type={'submit'}>Add post</button>
         </form>
     )

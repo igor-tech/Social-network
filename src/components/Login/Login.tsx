@@ -2,8 +2,8 @@ import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType, useAppSelector} from '../../redux/redux-store';
-import {Redirect} from 'react-router-dom';
 import {loginTC} from '../../redux/auth-reducer';
+import {Navigate} from 'react-router';
 
 type Inputs = {
     email: string
@@ -63,7 +63,7 @@ const LoginForm = () => {
 const Login = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     if (isAuth) {
-        return <Redirect to={`/profile`}/>
+        return <Navigate to={`/profile`}/>
     }
     return (
         <div style={{'padding': '20px', 'color': 'white'}}>

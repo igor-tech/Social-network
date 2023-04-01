@@ -11,7 +11,7 @@ let initialState = {
     captcha: null as null | string
 }
 
-export const authReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
+export const authReducer = (state: initialStateAuthReducerType = initialState, action: ActionsTypes): initialStateAuthReducerType => {
     switch (action.type) {
         case 'auth/SET_USER_DATA':
             return {
@@ -92,7 +92,7 @@ export const getCaptchaUrlTC = (): AppThunk => async (dispatch) => {
 
 
 //types
-type initialStateType = typeof initialState
+export type initialStateAuthReducerType = typeof initialState
 type ActionsTypes =
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof getCaptchaUrl>

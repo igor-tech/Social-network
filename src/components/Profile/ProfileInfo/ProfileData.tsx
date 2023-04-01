@@ -14,6 +14,7 @@ const stylePaper = {
 }
 export const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataPropsType) => {
     const [moreMode, setMoreMode] = useState(false)
+
     return <>
         {isOwner && <div>
             <button onClick={goToEditMode}>edit</button>
@@ -31,12 +32,16 @@ export const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataPropsTy
                 </div>
                 <div style={stylePaper}>
                     <div>Контакты</div>
-                    {!profile.contacts && <div>Контактов пока нет</div>}
-                    {Object.keys(profile.contacts as {}).map(key => {
+
+                    {Object.entries(profile.contacts as {}).every(([key,value]) => value === '') && <div>Контактов пока нет</div>}
+
+                    {Object.keys(profile.contacts as {}).map((key) => {
+                        console.log(key)
                         return <Contact contactTitle={key}
                                         contactValue={profile.contacts?.[key as keyof typeof profile.contacts]}
                                         key={key}/>
                     })}
+
                 </div>
 
             </div>

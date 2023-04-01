@@ -3,28 +3,23 @@ import s from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
 import SideBarContainer from './sideBar/SideBarContainer';
 
+const activeLink = (isActive: boolean, isPending: boolean) => isPending ? 'pending' : isActive ? `${s.activeLink}` : ''
+
+const NavbarLink = ({path, name}: {path: string, name: string}) => {
+    return <div className={s.item}>
+        <NavLink to={path} className={({isActive, isPending}) => activeLink(isActive, isPending)}>{name}</NavLink>
+    </div>
+}
 
 function Navbar() {
     return (
         <nav className={s.nav}>
-            <div className={s.item}>
-                <NavLink to="/profile" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>Profile</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to="/dialogs" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>Messages</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to="/news" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>News</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to="/music" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>Music</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to="/settings" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>Settings</NavLink>
-            </div>
-            <div className={s.item}>
-                <NavLink to="/users" className={({isActive, isPending}) => isPending ? 'pending' : isActive ? 's.activeLink' : ''}>Users</NavLink>
-            </div>
+            <NavbarLink path={"/profile"} name={'Profile'}/>
+            <NavbarLink path={"/dialogs"} name={'Messages'}/>
+            <NavbarLink path={"/news"} name={'News'}/>
+            <NavbarLink path={"/music"} name={'Music'}/>
+            <NavbarLink path={"/settings"} name={'Settings'}/>
+            <NavbarLink path={"/users"} name={'Users'}/>
             <div className={s.sidebar}>Friends
                 <SideBarContainer/>
             </div>

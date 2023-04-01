@@ -53,6 +53,6 @@ type InitialStateType = typeof initialState
 
 export type DialogsContainerType = {
     messages: Array<MessagePropsType>
-    dialogs: Array<DialogPropsType>
-    newMessageBody: string
+    dialogs?: Array<DialogPropsType>
+    newMessageBody?: string
 }

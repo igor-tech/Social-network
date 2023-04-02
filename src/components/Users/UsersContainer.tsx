@@ -48,6 +48,7 @@ type mapStateToProps = {
     isFetching: boolean
     followingInProgress: Array<number>
 }
+
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
@@ -58,9 +59,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(pageNumber)
         usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items)
-                this.props.toggleIsFetching(false)
-            });
+            this.props.setUsers(data.items)
+            this.props.toggleIsFetching(false)
+        });
     }
 
     render() {
@@ -98,10 +99,10 @@ function mapStateToProps(state: AppStateType): mapStateToProps {
 function mapDispatchToProps(dispatch: AppDispatch) {
     return {
         follow: (userId: number) => {
-            dispatch(followTC(userId))
+            return dispatch(followTC(userId))
         },
         unfollow: (userId: number) => {
-            dispatch(unfollowTC(userId))
+            return dispatch(unfollowTC(userId))
         },
         setUsers: (users: Array<UserType>) => {
             dispatch(setUsersAC(users))
@@ -114,10 +115,10 @@ function mapDispatchToProps(dispatch: AppDispatch) {
             dispatch(toggleIsFetchingAC(isFetching))
         },
         toggleFollowingProgress: (isFetching: boolean, userId: number) => {
-            dispatch(toggleFollowingProgressAC(isFetching,userId ))
+            dispatch(toggleFollowingProgressAC(isFetching, userId))
         },
-        getUsers: (currentPage:number, pageSize:number) => {
-            dispatch(getUsersTC(currentPage,pageSize))
+        getUsers: (currentPage: number, pageSize: number) => {
+            return dispatch(getUsersTC(currentPage, pageSize))
         }
 
     }

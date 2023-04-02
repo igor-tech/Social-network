@@ -1,5 +1,5 @@
 import {usersAPI} from '../api/api';
-import {Dispatch} from 'redux';
+import {AppThunk} from './redux-store';
 
 const initialState = {
     users: [] as Array<UserType>,
@@ -10,7 +10,7 @@ const initialState = {
     followingInProgress: [1] as Array<number>
 }
 
-export const usersReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
+export const usersReducer = (state: initialStateType = initialState, action: UsersActionsTypes): initialStateType => {
     switch (action.type) {
         case 'users/FOLLOW_UNFOLLOW':
             return {
@@ -50,7 +50,11 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 }
 
 //action creators
-export const followUnfollowAC = (userId: number, followed: boolean) => ({type: 'users/FOLLOW_UNFOLLOW', userId, followed} as const)
+export const followUnfollowAC = (userId: number, followed: boolean) => ({
+    type: 'users/FOLLOW_UNFOLLOW',
+    userId,
+    followed
+} as const)
 export const setUsersAC = (users: Array<UserType>) => ({type: 'users/SET_USERS', users} as const)
 export const setCurrentPageAC = (currentPage: number) => ({type: 'users/SET_CURRENT_PAGE', currentPage} as const)
 export const setUsersTotalCountAC = (totalCount: number) => ({type: 'users/SET_TOTAL_USERS_COUNT', totalCount} as const)
@@ -62,7 +66,7 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userId: number) =
 } as const)
 
 //thunk
-export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number): AppThunk => async dispatch => {
     dispatch(toggleIsFetchingAC(true))
     try {
         const res = await usersAPI.getUsers(currentPage, pageSize)
@@ -75,7 +79,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
         dispatch(toggleIsFetchingAC(false))
     }
 }
-export const followTC = (userId: number) => async (dispatch: Dispatch) => {
+export const followTC = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleFollowingProgressAC(true, userId))
     try {
         const res = await usersAPI.follow(userId)
@@ -88,7 +92,7 @@ export const followTC = (userId: number) => async (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgressAC(false, userId))
     }
 }
-export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
+export const unfollowTC = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleFollowingProgressAC(true, userId))
     try {
         const res = await usersAPI.unFollow(userId)
@@ -103,7 +107,7 @@ export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
 }
 
 //types
-type ActionsTypes =
+export type UsersActionsTypes =
     | ReturnType<typeof followUnfollowAC>
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof setCurrentPageAC>

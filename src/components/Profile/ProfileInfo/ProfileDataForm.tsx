@@ -41,9 +41,10 @@ export const ProfileDataForm = ({profile, setEditMode}: ProfileDataFormPropsType
     const {handleSubmit, register, setValue, formState: {errors}, setError} = useForm<InputsProfileData>()
     const dispatch = useAppDispatch()
     const onSubmit: SubmitHandler<InputsProfileData> = async (data: InputsProfileData) => {
-        const res = await dispatch(saveProfileTC(data)) as string
+        const res = await dispatch(saveProfileTC(data))
+
         if (res) {
-            let error = res.slice(30, -1).toLowerCase()
+            let error = res.toString().slice(30, -1).toLowerCase()
             setError('contacts.' + error as keyof InputsProfileData, {message: 'not corrected url'})
             console.log(res)
         }

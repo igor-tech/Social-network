@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 import {UserType} from '../../redux/users-reducer';
 import styles from './users.module.css';
 import avatarPhoto from '../../assets/images/avatar.png';
@@ -18,8 +18,11 @@ type UsersPropsType = {
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
-export const Users = ({follow, onPageChanged, followingInProgress, unfollow, users, pageSize, currentPage, totalUsersCount,
-                      }: UsersPropsType) => {
+export const Users: FC<UsersPropsType> = ({
+                                              follow, onPageChanged, followingInProgress,
+                                              unfollow, users, pageSize,
+                                              currentPage, totalUsersCount
+                                          }) => {
     return (
         <div className={styles.background}>
 
@@ -29,7 +32,8 @@ export const Users = ({follow, onPageChanged, followingInProgress, unfollow, use
                         <div className={styles.avatar}>
                             <div>
                                 <NavLink to={'/profile/' + u.id}>
-                                    <img className={classNames(styles.photo)} src={u.photos.small ? u.photos.small : avatarPhoto}
+                                    <img className={classNames(styles.photo)}
+                                         src={u.photos.small ? u.photos.small : avatarPhoto}
                                          alt="photoURL"/>
                                 </NavLink>
                             </div>

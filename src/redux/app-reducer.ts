@@ -3,7 +3,7 @@ const initialState = {
     Error: '' as string | null
 }
 
-export const appReducer = (state: appReducerType = initialState, action: ActionsTypes): appReducerType => {
+export const appReducer = (state: appReducerType = initialState, action: AppActionsTypes): appReducerType => {
     switch (action.type) {
         case 'SET_INITIALIZED':
             return {
@@ -19,6 +19,6 @@ export const appReducer = (state: appReducerType = initialState, action: Actions
 export const setInitializedAC = (isInitialized: boolean) => ({type: 'SET_INITIALIZED', isInitialized} as const)
 
 //types
-type ActionsTypes = ReturnType<typeof setInitializedAC>
+export type AppActionsTypes = ReturnType<typeof setInitializedAC>
 type appReducerType = typeof initialState
 

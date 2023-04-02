@@ -8,7 +8,7 @@ import Settings from './components/Settings/Settings';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import {useAppDispatch, useAppSelector} from './redux/redux-store';
-import {getAuthMeTC} from './redux/auth-reducer';
+import {initializedTC} from './redux/auth-reducer';
 import Preloader from './components/common/preloader/Preloader';
 import {Routes} from 'react-router';
 
@@ -60,7 +60,7 @@ export function App() {
         alert('Some error occurred')
     }
     useEffect(() => {
-        dispatch(getAuthMeTC())
+        dispatch(initializedTC())
         window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
         return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
     }, [])

@@ -3,7 +3,6 @@ import {profileAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 import {InputsProfileData} from '../components/Profile/ProfileInfo/ProfileDataForm';
 
-
 let initialState = {
     posts: [
         {id: 1, description: 'It is my first post', likesCount: 20},
@@ -15,13 +14,6 @@ let initialState = {
     profile: {} as ProfileUserType,
     status: ''
 }
-export type ProfileReducerInitialStateType = {
-    posts: Array<PostsType>,
-    newPostText: string,
-    profile: ProfileUserType
-    status: string
-}
-
 
 export const profileReducer = (state: ProfileReducerInitialStateType = initialState, action: ActionsTypes): ProfileReducerInitialStateType => {
     switch (action.type) {
@@ -66,7 +58,7 @@ export const addPostAC = (newMessageBody: string) => ({type: 'profile/ADD_POST',
 export const deletePostAC = (postId: number) => ({type: 'profile/DELETE_POST', postId} as const)
 export const setUserProfileAC = (profile: ProfileUserType) => ({type: 'profile/SET_USER_PROFILE', profile} as const)
 export const setStatusAC = (status: string) => ({type: 'profile/SET_STATUS', status} as const)
-export const savePhotosAC = (photos: any) => ({type: 'profile/SET_PHOTOS', photos} as const)
+export const savePhotosAC = (photos: {small: string, large: string}) => ({type: 'profile/SET_PHOTOS', photos} as const)
 export const saveProfileAC = (profile: InputsProfileData) => ({type: 'profile/SET_PROFILE', profile} as const)
 
 //thunk
@@ -97,7 +89,6 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
         console.warn(err as string)
     }
 }
-
 export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
     try {
         const res = await profileAPI.uploadPhoto(file)
@@ -109,7 +100,6 @@ export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
     }
 
 }
-
 export const saveProfileTC = (newProfile: InputsProfileData): AppThunk => async (dispatch, getState) => {
     let userId = getState().auth.id
     try {
@@ -123,7 +113,6 @@ export const saveProfileTC = (newProfile: InputsProfileData): AppThunk => async 
         console.warn(err as string)
     }
 }
-
 
 // types
 type ActionsTypes =
@@ -159,4 +148,10 @@ type PostsType = {
     id: number,
     description: string,
     likesCount: number
+}
+export type ProfileReducerInitialStateType = {
+    posts: Array<PostsType>,
+    newPostText: string,
+    profile: ProfileUserType
+    status: string
 }

@@ -35,10 +35,10 @@ export const authReducer = (state: initialStateAuthReducerType = initialState, a
 export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: 'auth/SET_USER_DATA', userId, email, login, isAuth
 } as const)
-
 export const getCaptchaUrl = (captcha: string) => ({type: 'auth/GET_CAPTCHA_URL', captcha} as const)
+
 //thunk
-export const getAuthMeTC = () => async (dispatch: Dispatch) => {
+export const initializedTC = () => async (dispatch: Dispatch) => {
     try {
         const res = await authAPI.me()
         if (res.resultCode === 0) {
@@ -56,7 +56,7 @@ export const loginTC = (data: RequestLoginType): AppThunk => async (dispatch) =>
     try {
         const res = await authAPI.login(data)
         if (res.resultCode === 0) {
-            await dispatch(getAuthMeTC())
+            await dispatch(initializedTC())
         } else if (res.resultCode === 10) {
             await dispatch(getCaptchaUrlTC())
             return res.messages.length && res.messages[0]
@@ -79,7 +79,6 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
         throw new Error(err as string)
     }
 }
-
 export const getCaptchaUrlTC = (): AppThunk => async (dispatch) => {
     try {
         const res = await securityAPI.getCaptchaUrl()
@@ -89,7 +88,6 @@ export const getCaptchaUrlTC = (): AppThunk => async (dispatch) => {
         throw new Error(err as string)
     }
 }
-
 
 //types
 export type initialStateAuthReducerType = typeof initialState

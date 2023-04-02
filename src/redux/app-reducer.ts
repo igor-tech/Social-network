@@ -1,7 +1,6 @@
-
-
 const initialState = {
-    isInitialized: false
+    isInitialized: false,
+    Error: '' as string | null
 }
 
 export const appReducer = (state: appReducerType = initialState, action: ActionsTypes): appReducerType => {
@@ -21,6 +20,5 @@ export const setInitializedAC = (isInitialized: boolean) => ({type: 'SET_INITIAL
 
 //types
 type ActionsTypes = ReturnType<typeof setInitializedAC>
-
 type appReducerType = typeof initialState
 

@@ -32,11 +32,9 @@ export const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataPropsTy
                 </div>
                 <div style={stylePaper}>
                     <div>Контакты</div>
-
-                    {Object.entries(profile.contacts as {}).every(([key,value]) => value === '') && <div>Контактов пока нет</div>}
-
+                    {Object.entries(profile.contacts as {}).every(([ key,value]) => value === '') && <div>Контактов пока нет</div>}
                     {Object.keys(profile.contacts as {}).map((key) => {
-                        console.log(key)
+
                         return <Contact contactTitle={key}
                                         contactValue={profile.contacts?.[key as keyof typeof profile.contacts]}
                                         key={key}/>

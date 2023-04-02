@@ -6,8 +6,7 @@ let initialState = {
     ]
 }
 
-
-export const sidebarReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+export const sidebarReducer = (state: InitialStateType = initialState): InitialStateType => {
     return state
 }
 

@@ -2,11 +2,12 @@ import React from 'react';
 import {Space, Spin} from 'antd';
 
 const Preloader = () => {
+
     return (
-        // <div className={styles.preloader}><img src={preloaderSVG} alt="loader"/></div>
         <Space
             style={{
-                height: '100vh',
+                background: 'white',
+                height: '100%',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

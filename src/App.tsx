@@ -77,8 +77,8 @@ export function App() {
                 <div className={'app-wrapper-content'}>
                     <Routes>
                         <Route path="/news" element={<News/>}/>
-                        <Route path="/music" element={Music}/>
-                        <Route path="/settings" element={Settings}/>
+                        <Route path="/music" element={<Music/>}/>
+                        <Route path="/settings" element={<Settings/>}/>
                         <Route path="/dialogs" element={<DialogsContainerLazy/>}/>
                         <Route path="/profile/:userId?" element={<ProfileContainerLazy/>}/>
                         <Route path="/users" element={<UsersContainerLazy/>}/>

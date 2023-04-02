@@ -51,7 +51,7 @@ const AddMessageForm = (props: AddMessageFormType) => {
             <textarea {...register('newMessageBody', {
                 required: 'field is required',
             })} placeholder={'enter your message'}/>
-            {errors && <div style={{color: 'red', fontSize: '14px'}}>{errors.newMessageBody}</div>}
+            {errors && <div style={{color: 'red', fontSize: '14px'}}>{errors.newMessageBody?.message}</div>}
             <button type={'submit'}>Send</button>
         </form>
     )

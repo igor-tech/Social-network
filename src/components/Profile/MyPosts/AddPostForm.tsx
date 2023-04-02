@@ -22,7 +22,7 @@ export const AddPostForm = (props: AddPostFormType) => {
             <textarea {...register('newPostProfile', {
                 required: 'field is required',
             })} placeholder={'enter your message'}/>
-            {errors && <div style={{color: 'red', fontSize: '14px'}}>{errors.newPostProfile}</div>}
+            {errors && <div style={{color: 'red', fontSize: '14px'}}>{errors.newPostProfile?.message}</div>}
             <button type={'submit'}>Add post</button>
         </form>
     )

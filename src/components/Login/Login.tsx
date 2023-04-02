@@ -1,7 +1,7 @@
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType, useAppSelector} from '../../redux/redux-store';
+import {useSelector} from 'react-redux';
+import {AppStateType, useAppDispatch, useAppSelector} from '../../redux/redux-store';
 import {loginTC} from '../../redux/auth-reducer';
 import {Navigate} from 'react-router';
 
@@ -18,7 +18,7 @@ const styleError = {
 }
 
 const LoginForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const {handleSubmit, register, formState: {errors}, setError} = useForm<Inputs>()
     const captchaUrl = useAppSelector(state => state.auth.captcha)
 

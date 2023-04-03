@@ -119,3 +119,11 @@ export type ResponseLoginType<T = {}> = {
     messages: [string]
     resultCode: number
 }
+
+
+//enum
+export enum ResultCodeEnum {
+    SUCCESS = 0,
+    ERROR = 1,
+    CAPTCHA = 10
+}

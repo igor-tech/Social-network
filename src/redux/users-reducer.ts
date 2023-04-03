@@ -1,4 +1,4 @@
-import {usersAPI} from '../api/api';
+import {ResultCodeEnum, usersAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 
 const initialState = {
@@ -83,7 +83,7 @@ export const followTC = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleFollowingProgressAC(true, userId))
     try {
         const res = await usersAPI.follow(userId)
-        if (res.resultCode === 0) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followUnfollowAC(userId, true))
         }
     } catch (err) {
@@ -96,7 +96,7 @@ export const unfollowTC = (userId: number): AppThunk => async dispatch => {
     dispatch(toggleFollowingProgressAC(true, userId))
     try {
         const res = await usersAPI.unFollow(userId)
-        if (res.resultCode === 0) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followUnfollowAC(userId, false))
         }
     } catch (err) {

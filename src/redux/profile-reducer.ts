@@ -1,4 +1,4 @@
-import {profileAPI} from '../api/api';
+import {profileAPI, ResultCodeEnum} from '../api/api';
 import {AppThunk} from './redux-store';
 import {InputsProfileData} from '../components/Profile/ProfileInfo/ProfileDataForm';
 
@@ -85,7 +85,7 @@ export const getStatusTC = (userId: string): AppThunk => async dispatch => {
 export const updateStatusTC = (status: string): AppThunk => async dispatch => {
     try {
         const res = await profileAPI.updateStatus(status)
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(setStatusAC(status))
         }
     } catch (err) {
@@ -95,7 +95,7 @@ export const updateStatusTC = (status: string): AppThunk => async dispatch => {
 export const savePhotoTC = (file: File): AppThunk => async dispatch => {
     try {
         const res = await profileAPI.uploadPhoto(file)
-        if (res.resultCode === 0) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(savePhotosAC(res.data.photos))
         }
     } catch (err) {
@@ -107,7 +107,7 @@ export const saveProfileTC = (newProfile: InputsProfileData): AppThunk<Promise<s
     let userId = getState().auth.id
     try {
         const res = await profileAPI.saveProfile(newProfile)
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
             return await dispatch(getProfileTC(userId!.toString()))
         } else {
             return res.data.messages[0]

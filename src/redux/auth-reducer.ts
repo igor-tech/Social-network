@@ -1,4 +1,4 @@
-import {authAPI, RequestLoginType, securityAPI} from '../api/api';
+import {authAPI, RequestLoginType, ResultCodeEnum, securityAPI} from '../api/api';
 import {AppThunk} from './redux-store';
 import {setInitializedAC} from './app-reducer';
 
@@ -54,12 +54,12 @@ export const initializedTC = (): AppThunk => async dispatch => {
 export const loginTC = (data: RequestLoginType): AppThunk => async dispatch => {
     try {
         const res = await authAPI.login(data)
-        if (res.resultCode === 0) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             await dispatch(initializedTC())
-        } else if (res.resultCode === 10) {
+        } else if (res.resultCode === ResultCodeEnum.CAPTCHA) {
             await dispatch(getCaptchaUrlTC())
             return res.messages.length && res.messages[0]
-        } else if (res.resultCode === 1) {
+        } else if (res.resultCode === ResultCodeEnum.ERROR) {
             return res.messages.length && res.messages[0]
         }
 
@@ -70,7 +70,7 @@ export const loginTC = (data: RequestLoginType): AppThunk => async dispatch => {
 export const logoutTC = (): AppThunk => async dispatch => {
     try {
         const res = await authAPI.logout()
-        if (res.resultCode === 0) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(setAuthUserData(null, null, null, false))
         }
 

@@ -76,6 +76,7 @@ export const getProfileTC = (userId: string): AppThunk => async dispatch => {
 export const getStatusTC = (userId: string): AppThunk => async dispatch => {
     try {
         const res = await profileAPI.getStatus(userId)
+        debugger
         dispatch(setStatusAC(res))
     } catch (err) {
         console.warn(err as string)
@@ -94,15 +95,15 @@ export const updateStatusTC = (status: string): AppThunk => async dispatch => {
 export const savePhotoTC = (file: File): AppThunk => async dispatch => {
     try {
         const res = await profileAPI.uploadPhoto(file)
-        if (res.data.resultCode === 0) {
-            dispatch(savePhotosAC(res.data.data.photos))
+        if (res.resultCode === 0) {
+            dispatch(savePhotosAC(res.data.photos))
         }
     } catch (err) {
         console.warn(err as string)
     }
 
 }
-export const saveProfileTC = (newProfile: InputsProfileData): AppThunk<Promise<string>> => async (dispatch, getState) => {
+export const saveProfileTC = (newProfile: InputsProfileData): AppThunk<Promise<string | void>> => async (dispatch, getState) => {
     let userId = getState().auth.id
     try {
         const res = await profileAPI.saveProfile(newProfile)
@@ -126,34 +127,37 @@ export type ProfileActionsTypes =
     | ReturnType<typeof saveProfileAC>
 
 export type ProfileUserType = {
-    aboutMe: string,
-    contacts?: {
-        github: string,
-        vk: string,
-        facebook: string,
-        instagram: string,
-        twitter: string,
-        website: string,
-        youtube: string,
-        mainLink: string
-    },
+    userId: number,
     lookingForAJob: boolean,
     lookingForAJobDescription?: string,
+    aboutMe: string,
     fullName: string,
-    userId: number,
-    photos: {
-        small: string,
-        large: string
-    }
+    contacts?: contactsType,
+    photos: PhotosType
+
 }
-type PostsType = {
-    id: number,
-    description: string,
-    likesCount: number
+type contactsType = {
+    github: string,
+    vk: string,
+    facebook: string,
+    instagram: string,
+    twitter: string,
+    website: string,
+    youtube: string,
+    mainLink: string
+}
+type PhotosType = {
+    small: string | null
+    large: string | null
 }
 export type ProfileReducerInitialStateType = {
     posts: Array<PostsType>,
     newPostText: string,
     profile: ProfileUserType
     status: string
+}
+type PostsType = {
+    id: number,
+    description: string,
+    likesCount: number
 }

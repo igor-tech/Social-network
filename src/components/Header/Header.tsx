@@ -3,7 +3,8 @@ import s from './Header.module.css';
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {logoutTC} from '../../redux/auth-reducer';
-import {AppStateType, useAppDispatch} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
 
 type HeaderType = {
     isAuth: boolean

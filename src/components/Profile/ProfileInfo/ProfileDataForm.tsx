@@ -1,7 +1,7 @@
 import {ProfileUserType, saveProfileTC} from '../../../redux/profile-reducer';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {useAppDispatch} from '../../../redux/redux-store';
 import React, {useEffect} from 'react';
+import {useAppDispatch} from '../../../hooks/useAppDispatch';
 
 type ProfileDataFormPropsType = {
     profile: ProfileUserType

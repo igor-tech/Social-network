@@ -3,6 +3,7 @@ import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 import {create} from 'react-test-renderer';
 
 
+
 describe('profile status', () => {
     test('after creation <span> should be displayed', () => {
         const component = create(<ProfileStatusWithHooks status={'Hello world'} updateStatus={() => {}}/>)

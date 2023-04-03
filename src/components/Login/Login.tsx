@@ -1,9 +1,11 @@
 import React from 'react';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useSelector} from 'react-redux';
-import {AppStateType, useAppDispatch, useAppSelector} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {loginTC} from '../../redux/auth-reducer';
 import {Navigate} from 'react-router';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 type Inputs = {
     email: string

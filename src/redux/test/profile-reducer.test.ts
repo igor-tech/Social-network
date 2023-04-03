@@ -42,14 +42,21 @@ test('post should be deleted', () => {
 })
 
 test('status should be changed', () => {
-    const action = setStatusAC("yOOO")
+    const action = setStatusAC('yOOO')
 
     const result = profileReducer(initialState, action)
 
-    expect(result.status).toBe("yOOO")
+    expect(result.status).toBe('yOOO')
 })
 test('profile should be changed', () => {
-    const action = setUserProfileAC({aboutMe: 'I student', userId: 2, fullName: '', lookingForAJob: false, lookingForAJobDescription: '', photos: {small: '', large: ''}})
+    const action = setUserProfileAC({
+        aboutMe: 'I student',
+        userId: 2,
+        fullName: '',
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        photos: {small: '', large: ''}
+    })
 
     const result = profileReducer(initialState, action)
 

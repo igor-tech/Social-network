@@ -1,7 +1,6 @@
 import {AnyAction, applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {AppActionsTypes, appReducer} from './app-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {AuthActionsTypes, authReducer} from './auth-reducer';
@@ -34,9 +33,6 @@ export type AppActionsType =
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActionsType>
-
-export const useAppDispatch = () => useDispatch<AppDispatch>()
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 //@ts-ignore
 window.store = store

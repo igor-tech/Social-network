@@ -7,10 +7,11 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import {useAppDispatch, useAppSelector} from './redux/redux-store';
 import {initializedTC} from './redux/auth-reducer';
 import Preloader from './components/common/preloader/Preloader';
 import {Routes} from 'react-router';
+import {useAppDispatch} from './hooks/useAppDispatch';
+import {useAppSelector} from './hooks/useAppSelector';
 
 export type PostPropsType = {
     id: number

@@ -28,7 +28,7 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-export const store: StoreType = {
+const fakeStore: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -93,6 +93,6 @@ export const store: StoreType = {
     },
 }
 
-export default store;
+export default fakeStore;
 
 

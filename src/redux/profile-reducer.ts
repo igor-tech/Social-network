@@ -76,7 +76,6 @@ export const getProfileTC = (userId: string): AppThunk => async dispatch => {
 export const getStatusTC = (userId: string): AppThunk => async dispatch => {
     try {
         const res = await profileAPI.getStatus(userId)
-        debugger
         dispatch(setStatusAC(res))
     } catch (err) {
         console.warn(err as string)
